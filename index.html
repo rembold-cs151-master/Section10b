@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Jed Rembold and Eric Roberts">
-  <title>Title</title>
+  <title>Dictionaries</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -36,15 +36,284 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">Title</h1>
+  <h1 class="title">Dictionaries</h1>
   <p class="author">Jed Rembold and Eric Roberts</p>
-  <p class="date">Date</p>
+  <p class="date">Week of April 8th</p>
+<div class="titlelinks">
+<a title="Template Repo" href="https://github.com/rembold-cs151-master/Section10b"><i class="fa-solid fa-folder-tree"></i></a>
+<a title="Template Zip"  href="https://github.com/rembold-cs151-master/Section10b/zipball/master/"><i class="fa-solid fa-file-zipper"></i></a>
+<a title="Questions"     href="https://github.com/rembold-cs151-master/Section10b/raw/main/SectionQuestions.pdf"><i class="fa-solid fa-file-pdf"></i></a>
+</div>
 </section>
 
 <section id="problem-1" class="slide level2">
 <h2>Problem 1</h2>
 <ul>
-<li>Is here!</li>
+<li>In Morse code, every letter is represented by a sequence of short
+pulses (“dots”) or long pulses (“dashes”) as shown in the following
+table:</li>
+</ul>
+<p><img data-src="./images/MorseCodeTable.png"
+style="width:60.0%" /></p>
+<ul>
+<li>The mapping from letters to Morse code is easy to represent as a
+Python dictionary in which the keys are the English letters and the
+values the corresponding string of dots and dashes, as shown on the next
+slide.</li>
+</ul>
+</section>
+<section id="a-python-english-to-morse-dictionary" class="slide level2">
+<h2>A Python English to Morse Dictionary</h2>
+<pre ><code class="mypython" style="max-height:900px; font-size:.8em"># File: MorseCodeDictionary.py
+
+"""
+This file defines a dictionary called LETTERS_TO_MORSE 
+whose entries are the Morse code translations of the letters.
+"""
+
+# Constants 
+
+LETTERS_TO_MORSE = {
+   "A": ".-",
+   "B": "-...",
+   "C": "-.-.",
+   "D": "-..",
+   "E": ".",
+   "F": "..-.",
+   "G": "--.",
+   "H": "....",
+   "I": "..",
+   "J": ".---",
+   "K": "-.-",
+   "L": ".-..",
+   "M": "--",
+   "N": "-.",
+   "O": "---",
+   "P": ".--.",
+   "Q": "--.-",
+   "R": ".-.",
+   "S": "...",
+   "T": "-",
+   "U": "..-",
+   "V": "...-",
+   "W": ".--",
+   "X": "-..-",
+   "Y": "-.--",
+   "Z": "--.."
+}</code></pre>
+</section>
+<section id="your-mission" class="slide level2">
+<h2>Your Mission</h2>
+<ul>
+<li><p>In this problem, your job is to write a Python program that
+translates messages to Morse code.</p></li>
+<li><p>Your program should read in lines from the user and then
+translate each line into Morse code.</p></li>
+<li><p>Your program should continue prompting the user and translating
+until an empty line is entered</p></li>
+<li><p>A sample run of this program (taken from the messages between the
+Titanic and the Carpathia in 1912) might look like this:</p>
+<pre ><code class="text" style="font-size:.75em">> SOS TITANIC
+... --- ... - .. - .- -. .. -.-.
+> WE ARE SINKING FAST
+.-- . .- .-. . ... .. -. -.- .. -. --. ..-. .- ... -
+></code></pre></li>
+</ul>
+</section>
+<section id="section" class="slide level2">
+<h2><code class="python">... --- .-.. ..- - .. --- -.</code></h2>
+<pre ><code class="mypython" style="max-height:900px; font-size:.75em;"># File: MorseCode.py
+
+"""This program solves the MorseCode problem from section."""
+
+from MorseCodeDictionary import LETTERS_TO_MORSE
+
+def morse_code():
+    """Translates lines to and from Morse code."""
+    finished = False
+    while not finished:
+        line = input("> ")
+        if line == "":
+            finished = True;
+        else:
+            print(translate_letters_to_morse(line))
+
+# Implementation note: translate_letters_to_morse
+# -----------------------------------------------
+# Translates a string of letters into Morse code characters separated
+# by spaces.  Characters that don't appear in the table are ignored.
+
+def translate_letters_to_morse(line):
+    morse = ""
+    for ch in line.upper():
+        if ch in LETTERS_TO_MORSE:
+            if morse != "":
+                morse += " "
+            morse += LETTERS_TO_MORSE[ch]
+    return morse
+
+# Startup code
+
+if __name__ == "__main__":
+    morse_code()</code></pre>
+</section>
+<section id="problem-2" class="slide level2">
+<h2>Problem 2</h2>
+<ul>
+<li>The primary computing story throughout most of 2023 and 2024 has
+revolved around generative AI and large-language models.</li>
+<li>While the underlying software for something like ChatGPT is much
+more complex, the core technology is based on a <em>large-language
+model</em> (LLM) that scans a massive volume of text and then uses that
+data to create sentences in which new words are chosen based on the
+frequency in which they appear in the context of the words already
+generated.</li>
+<li>ChatGPT uses complex contextual information to predict the next
+word, but one can construct a much simpler language-generation model
+that uses only the previous word to guess what word comes next.</li>
+</ul>
+</section>
+<section id="building-the-model" class="slide level2">
+<h2>Building the Model</h2>
+<ul>
+<li><p>To build a simplified language model that uses a single word as
+the context, all you need to do is create a dictionary in which each key
+is a word that appears in your text (often called the <em>corpus</em>)
+and the corresponding value is a list of all the words that follow that
+key.</p></li>
+<li><p>To get a sense for how this process works, it helps to start with
+a small corpus, which might consist of the following three lines from
+Shakespeare’s <em>Macbeth</em>:</p>
+<pre ><code class="text">Tomorrow, and tomorrow, and tomorrow
+Creeps in this petty pace from day to day
+To the last syllable of recorded time;</code></pre></li>
+<li><p>The dictionary that serves as our model must show, for example,
+that the word <code class="python">"tomorrow"</code> appears three
+times, twice followed by the word <code class="python">"and"</code> and
+once followed by <code class="python">"creeps"</code>.</p></li>
+</ul>
+</section>
+<section id="the-macbeth-language-model" class="slide level2">
+<h2>The “MacBeth” Language Model</h2>
+<ul>
+<li><p>The complete dictionary would look like:</p>
+<pre ><code class="mypython">{
+    "and": ["tomorrow", "tomorrow"],
+    "creeps": ["in"],
+    "day": ["to", "to"],
+    "from": ["day"],
+    "in": ["this"],
+    "last": ["syllable"],
+    "of": ["recorded"],
+    "pace": ["from"],
+    "petty": ["pace"],
+    "recorded": ["time"],
+    "syllable": ["of"],
+    "the": ["last"],
+    "this": ["petty"],
+    "time": [],
+    "to": ["day", "the"],
+    "tomorrow": ["and", "and", "creeps"]
+}</code></pre></li>
+</ul>
+</section>
+<section id="token-building" class="slide level2">
+<h2>Token Building</h2>
+<ul>
+<li>To build such a dictionary, you need to select off one word at a
+time from your corpus, appending it to the correct list in your
+dictionary.</li>
+<li>This is an excellent time to make use of the TokenScanner library
+and class!</li>
+<li>Remember that to do so you need to initialize the TokenScanner, and
+then iterate through as long as their remain tokens, retrieving each as
+you go.</li>
+<li>Write a function called
+<code class="python">create_model(text)</code> which uses the
+TokenScanner library to parse the provided text to create a simple
+dictionary language model, as shown on the previous slide.</li>
+</ul>
+</section>
+<section id="token-solution" class="slide level2">
+<h2>Token Solution</h2>
+<pre ><code class="mypython" style="max-height: 900px; font-size:.9em">def create_model(text):
+    """Returns the language-model dictionary 
+    for the provided text."""
+    scanner = TokenScanner(text)
+    model = { }
+    previous = None
+    while scanner.has_more_tokens():
+        word = scanner.next_token().lower()
+        if word.isalpha():
+            if word not in model:
+                model[word] = [ ]
+            if previous is not None:
+                model[previous].append(word)
+            previous = word
+    return model</code></pre>
+</section>
+<section id="problem-3" class="slide level2">
+<h2>Problem 3</h2>
+<ul>
+<li><p>Piggybacking off your success in Problem 2, your next task is to
+implement the function:</p>
+<pre ><code class="mypython">generate_text(model, start, max_words)</code></pre>
+<p>where:</p>
+<ul>
+<li><code class="python">model</code> is the dictionary created from
+Problem 2</li>
+<li><code class="python">start</code> is the first word of the generated
+text</li>
+<li><code class="python">max_words</code> is the maximum number of words
+to generate (though the process may end sooner if a word is encountered
+that has no valid subsequent words)</li>
+</ul></li>
+<li><p>Your function should return a string, which is built up by
+randomly selecting the next word from the dictionary given the current
+word</p></li>
+</ul>
+</section>
+<section id="macbeth-generation" class="slide level2">
+<h2>MacBeth Generation</h2>
+<ul>
+<li><p>With a simple model such as the three line selection from
+<em>MacBeth</em>, the function doesn’t have a great deal of choice, but
+there is still some flexibility.</p></li>
+<li><p>Given the starting word <code class="python">"tomorrow"</code>,
+<code class="python">generate_text</code> could return the original
+Shakespeare line, but it could also repeat
+<code class="python">"and tomorrow"</code> or
+<code class="python">"to day"</code> any number of times.</p></li>
+<li><p>Example:</p>
+<pre ><code class="text">tomorrow and tomorrow and tomorrow creeps in this petty pace from day to day to day to day to day to the last syllable of recorded time </code></pre></li>
+</ul>
+</section>
+<section id="possible-solution" class="slide level2">
+<h2>Possible Solution</h2>
+<pre ><code class="mypython">def generate_text(model, start, max_words=100):
+    sentence = start
+    current = start
+    while (len(sentence) <= max_words and 
+           len(model[current]) > 0):
+        next_word = random.choice(model[current])
+        sentence += " " + next_word
+        current = next_word
+    return sentence.capitalize() + "."</code></pre>
+</section>
+<section id="beyond" class="slide level2">
+<h2>Beyond</h2>
+<ul>
+<li>What might you do to further improve the quality of the text your
+program generates?
+<ul>
+<li>Building up a larger-corpus</li>
+<li>Looking at more than just the preceding word: maybe looking at the
+last three words</li>
+<li>Otherwise accounting for the current context of the generated
+sentence</li>
+</ul></li>
+<li>In the repository there are some larger blocks of text that you
+could read in and build corpuses from!</li>
 </ul>
 </section>
     </div>
@@ -64,9 +333,15 @@
   <!--<script src="./js/revealjs/../other_plugins/reveald3/reveald3.js"></script>,-->
   <script src="./js/revealjs/plugin/math/math.js"></script>
   <script src="./js/revealjs/plugin/highlight/highlight.js"></script>
+  <script src="./js/revealjs/../python_language.js"></script>
+
+  // Font Awesome Characters
+  <script src="https://kit.fontawesome.com/4bc05635b0.js" crossorigin="anonymous"></script>
 
   // Code Tracing
   <script src="./js/revealjs/../codetrace.js"></script>
+
+
 
   <script>
 
@@ -176,6 +451,11 @@
 		  <!--},-->
 		  CommonHTML: {scale: 80},
 		},
+          highlight: {
+            beforeHighlight: hljs => hljs.registerLanguage("mypython", function(hljs) {
+              console.log(mypythondef);
+              return mypythondef(hljs); } )
+          },
         // reveal.js plugins
         plugins: [
 		  RevealMath,
@@ -214,5 +494,17 @@
 		],
       });
     </script>
+  <script>
+  // This is admitedly a very hacky way to achieve my pseudo code highlighting, but it works?
+    function remove_bars() {
+      var pseudoBlocks = document.getElementsByClassName("hljs-pseudo");
+      console.log(pseudoBlocks);
+      for ( var i = 0; i < pseudoBlocks.length; i++) {
+        pseudoBlocks[i].innerHTML = pseudoBlocks[i].innerHTML.replaceAll("\|\|\|", "");
+      }
+      }
+    // omg this is even more hacky now, but I need this to run after hljs has done its thing
+    setTimeout(remove_bars, 100);
+  </script>
     </body>
 </html>
