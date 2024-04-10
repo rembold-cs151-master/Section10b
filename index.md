@@ -80,14 +80,14 @@ LETTERS_TO_MORSE = {
 
 ## `... --- .-.. ..- - .. --- -.`
 ```{.mypython style='max-height:900px; font-size:.75em;'}
-# File: MorseCode.py
-
-"""This program solves the MorseCode problem from section."""
 
 from MorseCodeDictionary import LETTERS_TO_MORSE
 
 def morse_code():
-    """Translates lines to and from Morse code."""
+    """Prompts user for english commands and then
+    prints morse equivalent. Inputting an empty line
+    exits the program.
+    """
     finished = False
     while not finished:
         line = input("> ")
@@ -96,12 +96,12 @@ def morse_code():
         else:
             print(translate_letters_to_morse(line))
 
-# Implementation note: translate_letters_to_morse
-# -----------------------------------------------
-# Translates a string of letters into Morse code characters separated
-# by spaces.  Characters that don't appear in the table are ignored.
 
 def translate_letters_to_morse(line):
+   """Translates a string of letters into Morse
+   code characters separated by spaces.  Characters 
+   that don't appear in the table are ignored.
+   """
     morse = ""
     for ch in line.upper():
         if ch in LETTERS_TO_MORSE:
@@ -109,8 +109,6 @@ def translate_letters_to_morse(line):
                 morse += " "
             morse += LETTERS_TO_MORSE[ch]
     return morse
-
-# Startup code
 
 if __name__ == "__main__":
     morse_code()
