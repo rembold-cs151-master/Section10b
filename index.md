@@ -219,7 +219,7 @@ def generate_text(model, start, max_words=100):
 
 ## Beyond
 - What might you do to further improve the quality of the text your program generates?
-   - Building up a larger-corpus
+   - Building up a larger corpus: building the model from a much longer piece of text
    - Looking at more than just the preceding word: maybe looking at the last three words
-   - Otherwise accounting for the current context of the generated sentence
+   - Some grammar checking or similar to ensure well-formed sentences?
 - In the repository there are some larger blocks of text that you could read in and build corpuses from!
