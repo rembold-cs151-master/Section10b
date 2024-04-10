@@ -1,2 +1,3 @@
-# section_template
-A template file for generating slides and content for a section meeting
+# Section 11: Dictionaries
+
+This week's section revolves around defining and using dictionaries!
