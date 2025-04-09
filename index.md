@@ -1,7 +1,7 @@
 ---
 title: "Dictionaries"
 author: Jed Rembold and Eric Roberts
-date: "Week of April 8th"
+date: "Week of April 7th"
 slideNumber: true
 theme: monokai
 highlightjs-theme: monokai
@@ -78,7 +78,7 @@ LETTERS_TO_MORSE = {
   >
   ```
 
-## `... --- .-.. ..- - .. --- -.`
+## `.- ... --- .-.. ..- - .. --- -.`
 ```{.mypython style='max-height:900px; font-size:.75em;'}
 
 from MorseCodeDictionary import LETTERS_TO_MORSE
@@ -116,7 +116,7 @@ if __name__ == "__main__":
 
 
 ## Problem 2
-- The primary computing story throughout most of 2023 and 2024 has revolved around generative AI and large-language models.
+- The primary computing story since 2023 has revolved around generative AI and large-language models.
 - While the underlying software for something like ChatGPT is much more complex, the core technology is based on a _large-language model_ (LLM) that scans a massive volume of text and then uses that data to create sentences in which new words are chosen based on the frequency in which they appear in the context of the words already generated.
 - ChatGPT uses complex contextual information to predict the next word, but one can construct a much simpler language-generation model that uses only the previous word to guess what word comes next.
 
