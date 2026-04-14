@@ -156,30 +156,39 @@ if __name__ == "__main__":
   }
   ```
 
-## Token Building
+## Model Building
 - To build such a dictionary, you need to select off one word at a time from your corpus, appending it to the correct list in your dictionary.
-- This is an excellent time to make use of the TokenScanner library and class!
-- Remember that to do so you need to initialize the TokenScanner, and then iterate through as long as their remain tokens, retrieving each as you go.
-- Write a function called `create_model(text)` which uses the TokenScanner library to parse the provided text to create a simple dictionary language model, as shown on the previous slide.
+- I'd recommend stripping out any punctuation and forcing everything to be lowercase (aka, keep only letters and whitespace characters).
+- How can you get one word at a time? Splitting on whitespace works pretty well!
+- Write a function called `create_model(text)` which cleans up the text and splits it into words, and then parses the word list to create a simple dictionary language model, as shown on the previous slide.
 
 
-## Token Solution
+## A Model Solution
 ```{.mypython style='max-height: 900px; font-size:.9em'}
 def create_model(text):
-    """Returns the language-model dictionary 
-    for the provided text."""
-    scanner = TokenScanner(text)
-    model = { }
-    previous = None
-    while scanner.has_more_tokens():
-        word = scanner.next_token().lower()
-        if word.isalpha():
-            if word not in model:
-                model[word] = [ ]
-            if previous is not None:
-                model[previous].append(word)
-            previous = word
-    return model
+   """Returns the language-model dictionary 
+   for the provided text."""
+
+   def clean_string(string):
+      """Keep only letters and spaces and 
+      force everything lowercase"""
+      out = ""
+      for letter in string:
+         if letter.isalpha() or letter.isspace():
+            out += letter.lower()
+      return out
+
+   words = clean_string(text).split()
+   model = {}
+   previous = None
+   for word in words:
+      if word not in model:
+         model[word] = []
+      if previous is not None:
+         model[previous].append(word)
+      previous = word
+
+   return model
 ```
 
 ## Problem 3

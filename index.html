@@ -218,40 +218,48 @@ once followed by <code class="python">"creeps"</code>.</p></li>
 }</code></pre></li>
 </ul>
 </section>
-<section id="token-building" class="slide level2">
-<h2>Token Building</h2>
+<section id="model-building" class="slide level2">
+<h2>Model Building</h2>
 <ul>
 <li>To build such a dictionary, you need to select off one word at a
 time from your corpus, appending it to the correct list in your
 dictionary.</li>
-<li>This is an excellent time to make use of the TokenScanner library
-and class!</li>
-<li>Remember that to do so you need to initialize the TokenScanner, and
-then iterate through as long as their remain tokens, retrieving each as
-you go.</li>
+<li>I’d recommend stripping out any punctuation and forcing everything
+to be lowercase (aka, keep only letters and whitespace characters).</li>
+<li>How can you get one word at a time? Splitting on whitespace works
+pretty well!</li>
 <li>Write a function called
-<code class="python">create_model(text)</code> which uses the
-TokenScanner library to parse the provided text to create a simple
-dictionary language model, as shown on the previous slide.</li>
+<code class="python">create_model(text)</code> which cleans up the text
+and splits it into words, and then parses the word list to create a
+simple dictionary language model, as shown on the previous slide.</li>
 </ul>
 </section>
-<section id="token-solution" class="slide level2">
-<h2>Token Solution</h2>
+<section id="a-model-solution" class="slide level2">
+<h2>A Model Solution</h2>
 <pre ><code class="mypython" style="max-height: 900px; font-size:.9em">def create_model(text):
-    """Returns the language-model dictionary 
-    for the provided text."""
-    scanner = TokenScanner(text)
-    model = { }
-    previous = None
-    while scanner.has_more_tokens():
-        word = scanner.next_token().lower()
-        if word.isalpha():
-            if word not in model:
-                model[word] = [ ]
-            if previous is not None:
-                model[previous].append(word)
-            previous = word
-    return model</code></pre>
+   """Returns the language-model dictionary 
+   for the provided text."""
+
+   def clean_string(string):
+      """Keep only letters and spaces and 
+      force everything lowercase"""
+      out = ""
+      for letter in string:
+         if letter.isalpha() or letter.isspace():
+            out += letter.lower()
+      return out
+
+   words = clean_string(text).split()
+   model = {}
+   previous = None
+   for word in words:
+      if word not in model:
+         model[word] = []
+      if previous is not None:
+         model[previous].append(word)
+      previous = word
+
+   return model</code></pre>
 </section>
 <section id="problem-3" class="slide level2">
 <h2>Problem 3</h2>
