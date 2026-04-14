@@ -251,22 +251,32 @@ class CodeTrace {
         }
 
         function mouseenterAction(e) {
-            button.src = "images/" + name + "Rollover.png";
+            //button.src = "images/" + name + "Rollover.png";
+            button.style.filter = "drop-shadow(0 0 12px rgba(0, 191, 255, 0.7))";
+            button.style.transform = "scale(1.05)";
             e.stopPropagation();
         }
 
         function mouseleaveAction(e) {
-            button.src = "images/" + name + "Control.png";
+            //button.src = "images/" + name + "Control.png";
+            button.style.filter = "none";
+            button.style.transform = "scale(1)";
+            button.style.brightness = "1";
             e.stopPropagation();
         }
 
         function mousedownAction(e) {
-            button.src = "images/" + name + "Pressed.png";
+            //button.src = "images/" + name + "Pressed.png";
+            button.style.filter = "drop-shadow(0 0 5px rgba(0, 191, 255, 0.9))";
+            button.style.transform = "scale(0.95)";
+            button.style.brightness = "0.8";
             e.stopPropagation();
         }
 
         function mouseupAction(e) {
-            button.src = "images/" + name + "Rollover.png";
+            //button.src = "images/" + name + "Rollover.png";
+            button.style.filter = "drop-shadow(0 0 12px rgba(0, 191, 255, 0.7))";
+            button.style.transform = "scale(1.05)";
             e.stopPropagation();
         }
 
