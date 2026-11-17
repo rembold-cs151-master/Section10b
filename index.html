@@ -14,10 +14,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     /* The extra [class] is a hack that increases specificity enough to
        override a similar rule in reveal.js */
@@ -41,7 +44,7 @@
 <section id="title-slide">
   <h1 class="title">Dictionaries</h1>
   <p class="author">Jed Rembold and Eric Roberts</p>
-  <p class="date">Week of April 13th</p>
+  <p class="date">Week of November 16th</p>
 <div class="titlelinks">
 <a title="Template Repo" href="https://github.com/rembold-cs151-master/Section10b"><i class="fa-solid fa-folder-tree"></i></a>
 <a title="Template Zip"  href="https://github.com/rembold-cs151-master/Section10b/zipball/master/"><i class="fa-solid fa-file-zipper"></i></a>
@@ -324,6 +327,28 @@ sentences?</li>
 </ul></li>
 <li>In the repository there are some larger blocks of text that you
 could read in and build corpuses from!</li>
+</ul>
+</section>
+<section id="addendum-reading-files-reminder" class="slide level2">
+<h2>Addendum: Reading Files Reminder</h2>
+<ul>
+<li><p>The general approach for reading a text file is to first
+<em>open</em> the file and associate that file with a variable, commonly
+called its <em>file handle</em></p></li>
+<li><p>We will also use the <em>with</em> keyword to ensure that Python
+cleans up after itself (closes the file) when we are done with it (Many
+of us could use a <code class="python">with</code> irl)</p>
+<pre ><code class="mypython">with open(|||filename|||) as |||file_handle|||:
+    |||Code to read the file using the file_handle|||</code></pre></li>
+<li><p>Python gives you several ways to actually read in the data</p>
+<ul>
+<li><code class="python">read</code> reads the entire file in as a
+string</li>
+<li><code class="python">readline</code> or
+<code class="python">readlines</code> reads a single line or lines from
+the file</li>
+<li>Can use the file handle as an iterator to loop over</li>
+</ul></li>
 </ul>
 </section>
     </div>

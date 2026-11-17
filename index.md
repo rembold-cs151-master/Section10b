@@ -1,7 +1,7 @@
 ---
 title: "Dictionaries"
 author: Jed Rembold and Eric Roberts
-date: "Week of April 13th"
+date: "Week of November 16th"
 slideNumber: true
 theme: python_catppuccin
 highlightjs-theme: catppuccin-mocha
@@ -232,3 +232,15 @@ def generate_text(model, start, max_words=100):
    - Looking at more than just the preceding word: maybe looking at the last three words
    - Some grammar checking or similar to ensure well-formed sentences?
 - In the repository there are some larger blocks of text that you could read in and build corpuses from!
+
+## Addendum: Reading Files Reminder
+- The general approach for reading a text file is to first _open_ the file and associate that file with a variable, commonly called its _file handle_
+- We will also use the _with_ keyword to ensure that Python cleans up after itself (closes the file) when we are done with it (Many of us could use a `with` irl)
+  ```mypython
+  with open(|||filename|||) as |||file_handle|||:
+      |||Code to read the file using the file_handle|||
+  ```
+- Python gives you several ways to actually read in the data
+	- `read` reads the entire file in as a string
+	- `readline` or `readlines` reads a single line or lines from the file
+	- Can use the file handle as an iterator to loop over
